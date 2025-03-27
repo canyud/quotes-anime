@@ -1,2 +1,1 @@
-# quotes anime
- api by Katanime created by https://github.com/ricko-v
+api by katanime that created by https://github.com/ricko-v

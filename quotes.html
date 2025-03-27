@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes - {{ anime_name }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #222;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .quote-list {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .quote-item {
+            border-bottom: 1px solid #555;
+            padding: 10px 0;
+        }
+        .quote-item:last-child {
+            border-bottom: none;
+        }
+        a {
+            text-decoration: none;
+            color: #ffcc00;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #ffaa00;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center mt-4">Quotes dari {{ anime_name }}</h1>
+    <a href="/" class="btn btn-warning my-3">Kembali</a>
+
+    <div class="quote-list">
+        {% if quotes %}
+            {% for quote in quotes %}
+            <div class="quote-item">
+                <p>"{{ quote['indo'] }}"</p>
+                <small>- {{ quote['character'] }}</small>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-danger">Tidak ada quotes tersedia untuk anime ini.</p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

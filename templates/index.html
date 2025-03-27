@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katanime - Daftar Anime</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #222;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+            max-width: 800px;
+        }
+        .anime-container {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .anime-item {
+            border-bottom: 1px solid #555;
+            padding: 10px 0;
+        }
+        .anime-item:last-child {
+            border-bottom: none;
+        }
+        a {
+            text-decoration: none;
+            color: #ffcc00;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #ffaa00;
+        }
+        .search-box {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container text-center">
+    <h1 class="fw-bold">Daftar Quotes dari Anime</h1>
+    <h3 class="fw-semibold">api by Katanime</h3>
+    <h5 class="fw-light">Candra Yuda Wardaya - Tugas IAE Pekan 4</h5>
+    
+    <!-- Input Cari Anime -->
+    <input type="text" class="form-control my-3" placeholder="Cari anime..." id="searchInput">
+
+    <!-- List Anime -->
+    <div class="anime-container">
+        <h3>List Anime</h3>
+        {% if anime_list %}
+            {% for anime in anime_list %}
+            <div class="anime-item">
+                <a href="{{ url_for('anime_quotes', anime_name=anime['anime']) }}">
+                    <strong>{{ anime['anime'] }}</strong>
+                </a>
+                <span class="badge bg-light text-dark">{{ anime['count'] }}</span>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-danger">Gagal mengambil data dari API</p>
+        {% endif %}
+    </div>
+
+    <!-- Input Cari Kata -->
+    <div class="search-box">
+        <h4 class="fw-bold">Cari Kata dalam Quotes</h4>
+        <input type="text" class="form-control my-2" placeholder="Masukkan kata..." id="kataInput">
+        <button class="btn btn-primary mt-2" onclick="searchQuotes()">Cari</button>
+    </div>
+</div>
+
+<script>
+    // Filter pencarian anime secara langsung
+    document.getElementById("searchInput").addEventListener("input", function() {
+        let filter = this.value.toLowerCase();
+        let items = document.querySelectorAll(".anime-item");
+
+        items.forEach(item => {
+            let text = item.textContent.toLowerCase();
+            item.style.display = text.includes(filter) ? "" : "none";
+        });
+    });
+
+    // Redirect ke halaman hasil pencarian kata
+    function searchQuotes() {
+        let keyword = document.getElementById("kataInput").value.trim();
+        if (!keyword) {
+            alert("Masukkan kata yang ingin dicari!");
+            return;
+        }
+
+        window.location.href = `/carikata?kata=${encodeURIComponent(keyword)}`;
+    }
+</script>
+
+</body>
+</html>
